@@ -10,7 +10,7 @@ router.get("/users", authController.getAllUsers);
 router.get("/google", passport.authenticate("google", { scope: ["email", "profile"], keepSessionInfo: true }));
 router.get("/google/callback", passport.authenticate("google", {
     successRedirect: `${process.env.CLIENT_URL}`,
-    failureRedirect: "/api/auth/login",
+    failureRedirect: "/api/auth/google",
     keepSessionInfo: true,
 }))
 

@@ -1,5 +1,4 @@
 const router = require("express").Router();
-const { Passport } = require("passport");
 const User = require("../models/user");
 
 class authController {
@@ -27,7 +26,6 @@ class authController {
         });
     }
     async isAuth(req, res) {
-        console.log("req.isAuthenticated: ", req.isAuthenticated())
         if (req.isAuthenticated()) {
             const user = req.user;
             return res.json({ isAuthorized: true, user: user });

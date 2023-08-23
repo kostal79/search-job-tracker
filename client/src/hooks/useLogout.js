@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux"
 import { logoutUser } from "../services/authApi";
 import { resetUserInfo, setIsAuth } from "../redux/slices/authSlice";
-import { useCallback, useContext, useState } from "react";
+import { useCallback } from "react";
 import { useNavigate } from "react-router-dom"
 
 export const useLogout = () => {

@@ -4,14 +4,13 @@ import { useSelector } from "react-redux";
 import { AiOutlineMenu } from "react-icons/ai";
 import { Tooltip } from "react-tooltip";
 import { useLogout } from "../hooks/useLogout";
-import { useLogin } from "../hooks/useLogin";
-// import { loginUser } from "../services/authApi";
+import { SERVER_URL } from "../constants";
 
 export default function Header() {
   const isAuth = useSelector((state) => state.auth.isAuth);
   const user = useSelector((state) => state.auth.user);
   const logOut = useLogout();
-  const logIn = useLogin();
+  const logIn = () => window.location.href = `${SERVER_URL}/api/auth/google`;
 
   return (
     <header>
@@ -32,9 +31,9 @@ export default function Header() {
               <p>{`Hi Guest!`}</p>
               <button
                 className="p-1 border-solid border border-gray-500 rounded-md"
-                onClick={()=> window.location.href = "http://localhost:5000/api/auth/google"}
+                onClick={logIn}
               >
-                Sing in
+                Sing in with Google
               </button>
             </div>
           </Tooltip>
