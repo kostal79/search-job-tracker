@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+html {
+box-sizing: border-box;
+}
+*, *:before, *::after {
+    box-sizing: inherit;
+}
+body,
+p,
+h1,
+h2,
+h3,
+h4,
+ul,
+li,
+figure,
+figcaption {
+    margin: 0;
+}
