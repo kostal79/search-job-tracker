@@ -21,3 +21,7 @@ figure,
 figcaption {
     margin: 0;
 }
+
+main {
+    min-height: 100vh;
+}

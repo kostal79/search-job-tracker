@@ -8,7 +8,8 @@ const UserSchema = new Schema({
     email: { type: String, unique: true, },
     googleId: { type: String },//if sign up via google
     avatar: { type: String },
-    notes: { type: [ObjectId], ref: Note }
+    notes: { type: [ObjectId], ref: Note },
+    role: {type: [String], default: ['user']}
 })
 
 module.exports = model("User", UserSchema)
