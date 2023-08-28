@@ -10,10 +10,11 @@ export async function getAllNotes(userId) {
     }
 }
 
-export async function createNote() {
-    const noteId = await axios.post(`${SERVER_URL}/api/notes/create`);
+export async function createNote(data) {
+    const noteData = await axios.post(`${SERVER_URL}/api/notes/create`, data);
+    const noteId = noteData.data._id;
     const response = await axios.put(`${SERVER_URL}/api/users/addNote`, { noteId: noteId }, { withCredentials: true });
-    console.log(response.data);
+    return response.data;
 }
 
 export async function removeNote(noteId) {
