@@ -1,28 +1,18 @@
 import React from "react";
 import { Field, Form, Formik } from "formik";
-import { createNote } from "../services/notesApi";
 
-export default function FormAddNote({onClose, refrashePage}) {
-  const initialValues = {
-    company: "",
-    vacancy: "",
-    status: "under review",
-    contact: "",
-    comment: "",
-  };
+export default function FormAddNote({ initialValues, onSubmit }) {
 
-  const onSubmit = async (values) =>{
-    await createNote(values);
-    onClose((prev => false));
-    // window.location.reload()
-    alert(`Created new note`)
-
-}
 
   return (
     <Formik initialValues={initialValues} onSubmit={onSubmit}>
       {(props) => (
-        <Form className=" text-grey-dark text-base font-bold grid grid-cols-2 gap-6" type="text" name="company" onChange={props.handleChange}>
+        <Form
+          className=" text-grey-dark text-base font-bold grid grid-cols-2 gap-6"
+          type="text"
+          name="company"
+          onChange={props.handleChange}
+        >
           <label htmlFor="company">Company:</label>
           <Field name="company" placeholder="enter company name..." />
           <label htmlFor="vacancy">Vacancy:</label>

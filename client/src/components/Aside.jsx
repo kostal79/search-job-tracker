@@ -6,10 +6,14 @@ import ButtonData from "./ButtonData";
 import ButtonDataFinished from "./ButtonDataFinished";
 import ButtonDataActive from "./ButtonDataActive";
 import ButtonAnalitics from "./ButtonAnalitics";
+import { useSearchParams } from "react-router-dom";
 
 export default function Aside() {
   const isAuth = useSelector((state) => state.auth.isAuth);
   const user = useSelector((state) => state.auth.user);
+  const [searchParams, _] = useSearchParams();
+  const status = searchParams.get("status");
+
   if (isAuth) {
     return (
       <aside className="flex flex-col w-64 min-w-[250px] bg-grey-main py-10 px-5">
@@ -29,9 +33,9 @@ export default function Aside() {
           <ButtonSettings />
         </section>
       <nav className="flex flex-col gap-2 mt-10">
-        <ButtonData />
-        <ButtonDataActive />
-        <ButtonDataFinished />
+        <ButtonData status={status}/>
+        <ButtonDataActive status={status}/>
+        <ButtonDataFinished status={status}/>
         <ButtonAnalitics />
 
       </nav>

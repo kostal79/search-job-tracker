@@ -4,6 +4,7 @@ const Note = require("../models/note");
 class noteController {
     async getAllNotes(req, res) {
         try {
+            const user = req.user;
             const collection = await Note.find();
             return res.status(200).json(collection)
         } catch (error) {

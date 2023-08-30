@@ -5,7 +5,7 @@ export default function Dialog({ open, onClose, children }) {
   return (
     <dialog
       open={open}
-      className="fixed w-full h-full bg-slate-500/[0.5]"
+      className="fixed w-full h-full top-0 left-0 bg-slate-500/[0.5]"
     >
       <div className="w-full h-full flex flex-col justify-center items-center">
         <header

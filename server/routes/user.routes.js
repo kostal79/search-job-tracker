@@ -7,7 +7,7 @@ const router = new Router();
 router.get('/all', isAdminMiddleware, userController.getAllUsers);
 router.put('/addNote',isAuthMiddleware, userController.addNoteInList)
 router.put('/removeNote',isAuthMiddleware, userController.removeNoteFromList)
-router.get('/:userId', isAuthMiddleware, userController.getOneUser);
+router.get('/notes', isAuthMiddleware, userController.getOneUser);
 router.put('/:userId', isAdminMiddleware, userController.updateUser);
 router.delete('/:userId',isAdminMiddleware, userController.removeUser);
 
