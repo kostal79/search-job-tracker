@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
     notes: [],
-    activePage: 1,
+    searchParams: null,
 }
 
 export const noteSlice = createSlice({
@@ -28,12 +28,12 @@ export const noteSlice = createSlice({
                 }
             }
         },
-        setActivePage: (state, action) => {
-            state.activePage = action.payload;
+        setSearch: (state, action) => {
+            state.searchParams = action.payload;
         }
     }
 })
 
-export const { setNotes, addNote, deleteFromNotes, editNote, setActivePage } = noteSlice.actions
+export const { setNotes, addNote, deleteFromNotes, editNote, setSearch } = noteSlice.actions
 
 export default noteSlice.reducer

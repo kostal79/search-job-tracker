@@ -4,7 +4,7 @@ const passport = require("passport")
 const noteController = require("../controllers/noteController");
 const isAdminMiddleware = require("../middlewares/isAdminMiddleware");
 
-router.get("/all",isAdminMiddleware, noteController.getAllNotes);
+router.get("/all", noteController.getAllNotes);
 router.get("/:noteId", noteController.getOneNote)
 router.post("/create", noteController.createNote)
 router.delete("/:noteId", noteController.deleteNote)

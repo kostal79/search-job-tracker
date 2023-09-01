@@ -1,20 +1,32 @@
 import React, { useState } from "react";
 import { LuSearch } from "react-icons/lu";
 import { LuXCircle } from "react-icons/lu";
+import { useDispatch } from "react-redux";
+import { setSearch } from "../redux/slices/noteSlice";
 
 export default function SearchInput() {
   const [searchValue, setSearchValue] = useState("");
+  const dispatch = useDispatch();
 
   const searchSubmit = () => {
-    console.log("search");
+    dispatch(setSearch(searchValue))
   };
 
   const changeHandler = (event) => {
+    const makeSearch = (event) => {
+      console.log("pressed")
+      if (event.key === "Enter") {
+        searchSubmit();
+      }
+      window.removeEventListener("keypress", makeSearch)
+    }
     setSearchValue(event.target.value);
+    window.addEventListener("keypress", makeSearch)
   };
 
   const clearHandler = () => {
     setSearchValue("")
+    dispatch(setSearch(null))
   }
   return (
     <div className="relative w-[70%]">

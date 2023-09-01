@@ -1,12 +1,21 @@
-const router = require("express").Router();
 const Note = require("../models/note");
 
 class noteController {
     async getAllNotes(req, res) {
         try {
             const user = req.user;
-            const collection = await Note.find();
-            return res.status(200).json(collection)
+            const {page, limit, sort, order_increasing, ...rest} = req.query;
+            const query = rest;
+            const collection = await Note.find({_id: {$in:user.notes},...query})
+            const totalItems = collection.length;
+            const totalPages = Math.ceil(totalItems / limit);
+
+            const notes = await Note.find({_id: {$in:user.notes},...query})
+            .skip((page - 1) * limit)
+            .limit(limit)
+            .sort({[sort]: order_increasing})
+            
+            return res.status(200).json({totalItems, totalPages, notes, currentPage: page})
         } catch (error) {
             console.error(error)
             return res.status(500).json({ message: "Can not get notes" })

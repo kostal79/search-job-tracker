@@ -1,24 +1,37 @@
 import axios from "axios"
 import { SERVER_URL, activeStatuses, finishedStatuses } from "../constants";
 
-export async function getAllNotes() {
+export async function getAllNotes(params) {
     try {
-        const response = await axios.get(`${SERVER_URL}/api/users/notes`, { withCredentials: true });
-        return response.data.notes;
-    } catch (err) {
+        let statusQuery = null;
+        if (params.status === "active") {
+            statusQuery = { $in: activeStatuses }
+        } else if (params.status === "finished") {
+            statusQuery = { $in: finishedStatuses }
+        } else {
+            statusQuery = null;
+        }
+        let dateQuery = null;
+        if (params.time_from && params.time_to) {
+            dateQuery = { $gte: params.time_from, $lt: params.time_to }
+        }
+        const notes = await axios.get(`${SERVER_URL}/api/notes/all`, {
+            withCredentials: true,
+            params: {
+                status: statusQuery,
+                page: params.page,
+                sort: params.sort,
+                order_increasing: params.order_increasing,
+                limit: params.limit,
+                created_at: dateQuery,
+            }
+        });
+        return notes.data
+    } catch {
         console.error(err.message)
     }
 }
 
-export async function getFinishedNotes() {
-    try {
-        const response = await axios.get(`${SERVER_URL}/api/users/notes`, { withCredentials: true });
-        const finishedNotes = response.data.notes.filter(note => finishedStatuses.includes(note.status));
-        return finishedNotes
-    } catch (err) {
-        console.error(err.message)
-    }
-}
 
 export async function getActiveNotes() {
     try {

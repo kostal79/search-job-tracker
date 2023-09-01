@@ -1,22 +1,23 @@
-import React, { useEffect } from "react";
-import { useAsyncValue, useSearchParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { setNotes } from "../redux/slices/noteSlice";
+import React from "react";
 import ButtonEdit from "./ButtonEdit";
 import ButtonDeleteNote from "./ButtonDeleteNote";
-import useFilteredNotes from "../hooks/useFilteredNotes";
+import { useSelector } from "react-redux";
+import Triangle from "./Triangle";
 
 export default function Table() {
-  const notes = useAsyncValue();
-  
-  const notesStore = useFilteredNotes(notes);
+  const notes = useSelector((state) => state.notes.notes);
 
-  if (notesStore.length > 0) {
+  if (notes.length > 0) {
     return (
-      <table className="m-8 text-grey-dark text-base table-fixed min-w-[800px]">
+      <table className="mt-8 text-grey-dark text-base table-fixed min-w-[800px]">
         <thead>
           <tr>
-            <th className="py-5">Company name</th>
+            <th className="py-5">
+              <span className="flex gap-2 items-center">
+                <p>Company name</p>
+                <Triangle defaultSort={true} fieldName={"company"} />
+              </span>
+            </th>
             <th className="py-5">Vacancy</th>
             <th className="py-5">Contacts</th>
             <th className="py-5">Status</th>
@@ -27,7 +28,7 @@ export default function Table() {
           </tr>
         </thead>
         <tbody>
-          {notesStore.map((note, index) => {
+          {notes.map((note, index) => {
             let style =
               index % 2
                 ? { backgroundColor: "white" }

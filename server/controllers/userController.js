@@ -14,7 +14,7 @@ class userController {
     async getOneUser(req, res) {
         try {
             const userId = req.user._id;
-            const user = await User.findById(userId).populate("notes");
+            const user = await User.findById(userId);
             if (!user) {
                 return res.status(404).json({ message: `User with id ${userId} not found` })
             }

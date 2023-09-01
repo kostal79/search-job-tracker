@@ -3,18 +3,16 @@ import SearchInput from "../components/SearchInput";
 import ButtonAddNote from "../components/ButtonAddNote";
 import Table from "../components/Table";
 import { Await, defer, useLoaderData, useSearchParams } from "react-router-dom";
-import {
-  createNote,
-  getActiveNotes,
-  getAllNotes,
-  getFinishedNotes,
-} from "../services/notesApi";
+import { createNote, getAllNotes } from "../services/notesApi";
 import Dialog from "../components/Dialog";
 import FormAddNote from "../components/FormAddNote";
 import { useDispatch } from "react-redux";
 import { addNote } from "../redux/slices/noteSlice";
-import { activeStatuses, finishedStatuses } from "../constants";
+import { activeStatuses, finishedStatuses, pageLimit } from "../constants";
 import Pagination from "../components/Pagination";
+import TableLoader from "../loaders/TableLoader";
+import Filters from "../components/Filters";
+import { getYearMonth } from "../utils/getYearMont";
 
 export default function Dashboard() {
   const { notes } = useLoaderData();
@@ -49,17 +47,20 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="flex flex-col w-full ">
-      <header className="p-8 flex justify-between border-b border-grey-main">
+    <div className="flex flex-col w-full p-8">
+      <header className="flex justify-between border-b border-grey-main">
         <h1 className="text-grey-dark text-3xl font-bold">Data table</h1>
         <section className="w-[70%] flex gap-8 items-center justify-end">
           <SearchInput />
           <ButtonAddNote onClick={onOpen} />
         </section>
       </header>
+      <Filters />
       <Suspense fallback={<p>Table loading...</p>}>
         <Await resolve={notes}>
-          <Table />
+          <TableLoader>
+            <Table />
+          </TableLoader>
           <Pagination />
         </Await>
       </Suspense>
@@ -73,12 +74,23 @@ export default function Dashboard() {
 export async function dashboardLoader({ params, request }) {
   const url = new URL(request.url);
   const searchParams = new URLSearchParams(url.search);
-  const status = searchParams.get("status");
-  if (!status) {
-    return defer({ notes: getAllNotes() });
-  } else if (status === "finished") {
-    return defer({ notes: getFinishedNotes() });
-  } else if (status === "active") {
-    return defer({ notes: getActiveNotes() });
-  }
+  const status = searchParams.get("status") || null;
+  const page = searchParams.get("page") || 1;
+  const sort = searchParams.get("sort") || "created_at";
+  const order_increasing = searchParams.get("order") || -1;
+  const limit = pageLimit;
+  const time_from = searchParams.get("time_from") 
+  const time_to = searchParams.get("time_to")
+
+  const notes = getAllNotes({
+    status,
+    page,
+    limit,
+    sort,
+    order_increasing,
+    time_from,
+    time_to
+  });
+
+  return defer({ notes: notes });
 }
