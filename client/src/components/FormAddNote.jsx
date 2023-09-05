@@ -3,7 +3,6 @@ import { Field, Form, Formik } from "formik";
 
 export default function FormAddNote({ initialValues, onSubmit }) {
 
-
   return (
     <Formik initialValues={initialValues} onSubmit={onSubmit}>
       {(props) => (

@@ -24,6 +24,7 @@ export async function getAllNotes(params) {
                 order_increasing: params.order_increasing,
                 limit: params.limit,
                 created_at: dateQuery,
+                search: params.search,
             }
         });
         return notes.data

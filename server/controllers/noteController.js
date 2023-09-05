@@ -4,18 +4,40 @@ class noteController {
     async getAllNotes(req, res) {
         try {
             const user = req.user;
-            const {page, limit, sort, order_increasing, ...rest} = req.query;
+            const { page, limit, sort, order_increasing, search, ...rest } = req.query;
             const query = rest;
-            const collection = await Note.find({_id: {$in:user.notes},...query})
-            const totalItems = collection.length;
-            const totalPages = Math.ceil(totalItems / limit);
-
-            const notes = await Note.find({_id: {$in:user.notes},...query})
-            .skip((page - 1) * limit)
-            .limit(limit)
-            .sort({[sort]: order_increasing})
             
-            return res.status(200).json({totalItems, totalPages, notes, currentPage: page})
+            if (search) {
+                const notes = await Note.aggregate([
+                    {
+                        $search: {
+                            index: "default",
+                            text: {
+                                query: `$search: {text: \"${search}\"}`,
+                                path: {
+                                    wildcard: "*"
+                                }
+                            }
+                        }
+                    }
+                ]);
+                const totalItems = notes.length;
+                const totalPages = Math.ceil(totalItems / limit);
+                return res.status(200).json({ totalItems, totalPages, notes, currentPage: page })
+                
+            } else {
+                const collection = await Note.find({ _id: { $in: user.notes }, ...query })
+                const totalItems = collection.length;
+                const totalPages = Math.ceil(totalItems / limit);
+                const notes = await Note.find({ _id: { $in: user.notes }, ...query })
+                    .skip((page - 1) * limit)
+                    .limit(limit)
+                    .sort({ [sort]: order_increasing })
+
+                return res.status(200).json({ totalItems, totalPages, notes, currentPage: page })
+
+            }
+
         } catch (error) {
             console.error(error)
             return res.status(500).json({ message: "Can not get notes" })

@@ -12,7 +12,6 @@ import { activeStatuses, finishedStatuses, pageLimit } from "../constants";
 import Pagination from "../components/Pagination";
 import TableLoader from "../loaders/TableLoader";
 import Filters from "../components/Filters";
-import { getYearMonth } from "../utils/getYearMont";
 
 export default function Dashboard() {
   const { notes } = useLoaderData();
@@ -48,7 +47,7 @@ export default function Dashboard() {
 
   return (
     <div className="flex flex-col w-full p-8">
-      <header className="flex justify-between border-b border-grey-main">
+      <header className="flex justify-between border-b border-grey-main pb-7">
         <h1 className="text-grey-dark text-3xl font-bold">Data table</h1>
         <section className="w-[70%] flex gap-8 items-center justify-end">
           <SearchInput />
@@ -79,8 +78,18 @@ export async function dashboardLoader({ params, request }) {
   const sort = searchParams.get("sort") || "created_at";
   const order_increasing = searchParams.get("order") || -1;
   const limit = pageLimit;
-  const time_from = searchParams.get("time_from") 
-  const time_to = searchParams.get("time_to")
+  const search = searchParams.get("search") || null;
+  const currentMonth = new Date().getMonth();
+  const currentYear = new Date().getFullYear();
+  const nextMonth = currentMonth + 1 < 12 ? currentMonth + 1 : 0;
+
+  const nextYear = nextMonth === 0 ? currentYear + 1 : currentYear;
+
+  const DateFrom = new Date(currentYear, currentMonth).valueOf();
+  const DateTo = new Date(nextYear, nextMonth).valueOf();
+
+  const time_from = searchParams.get("time_from") || DateFrom;
+  const time_to = searchParams.get("time_to") || DateTo;
 
   const notes = getAllNotes({
     status,
@@ -89,7 +98,8 @@ export async function dashboardLoader({ params, request }) {
     sort,
     order_increasing,
     time_from,
-    time_to
+    time_to,
+    search,
   });
 
   return defer({ notes: notes });
