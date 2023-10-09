@@ -1,10 +1,14 @@
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import ButtonEdit from "./ButtonEdit";
 import ButtonDeleteNote from "./ButtonDeleteNote";
 import { useAppSelector } from "../redux/hooks";
+import { INotes } from "../types/types";
 
-export default function Table() : ReactNode {
-  const notes = useAppSelector((state) => state.notes.notes);
+interface TableProps {
+  notes: INotes[];
+}
+
+export default function Table({notes} : TableProps) : ReactNode {
 
   if (notes.length > 0) {
     return (

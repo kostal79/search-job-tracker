@@ -1,46 +1,17 @@
 import axios from "axios";
-import { SERVER_URL, activeStatuses, finishedStatuses } from "../constants";
-import { EditableValuesType, INoteParams, INotes } from "../types/types";
-
-
+import { SERVER_URL, activeStatuses } from "../constants";
+import { EditableValuesType, INotes } from "../types/types";
 
 interface IDeleteRequest {
   message: string;
 }
 
-export async function getAllNotes(
-  params: INoteParams
-): Promise<INotes | undefined> {
-  try {
-    let statusQuery = null;
-    if (params.status === "active") {
-      statusQuery = { $in: activeStatuses };
-    } else if (params.status === "finished") {
-      statusQuery = { $in: finishedStatuses };
-    } else {
-      statusQuery = null;
-    }
-    let dateQuery = null;
-    if (params.time_from && params.time_to) {
-      dateQuery = { $gte: params.time_from, $lt: params.time_to };
-    }
-    const notes = await axios.get(`${SERVER_URL}/api/notes/all`, {
-      withCredentials: true,
-      params: {
-        status: statusQuery,
-        page: params.page,
-        sort: params.sort,
-        order_increasing: params.order_increasing,
-        limit: params.limit,
-        created_at: dateQuery,
-        search: params.search,
-      },
-    });
-    return notes.data;
-  } catch (err) {
-    if (err instanceof Error) console.error(err.message);
-    else console.error("Unknown error");
-  }
+export async function getAllNotes(): Promise<INotes[]> {
+  const notes = await axios.get(`${SERVER_URL}/api/notes/all`, {
+    withCredentials: true,
+  });
+  console.log("NOTES: ", notes);
+  return notes.data.notes;
 }
 
 export async function getActiveNotes(): Promise<INotes[] | undefined> {
@@ -58,7 +29,9 @@ export async function getActiveNotes(): Promise<INotes[] | undefined> {
   }
 }
 
-export async function createNote(data: EditableValuesType): Promise<INotes | undefined> {
+export async function createNote(
+  data: EditableValuesType
+): Promise<INotes | undefined> {
   try {
     const noteData = await axios.post(`${SERVER_URL}/api/notes/create`, data);
     const noteId = noteData.data._id;

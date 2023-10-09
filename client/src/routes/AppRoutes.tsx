@@ -5,12 +5,14 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import { lazy, ReactNode } from "react";
-import Layout from "../Layout";
+import Layout from "../layouts/Layout";
 import PrivateRoute from "./PrivateRoute";
-import { dashboardLoader } from "../pages/Dashboard";
 
-const Dashboard = lazy(() => import("../pages/Dashboard"));
+const DashboardLayout = lazy(() => import("../layouts/DashboardLayout"));
 const Home = lazy(() => import("../pages/Home"));
+const VacanciesAll = lazy(() => import("../pages/VacanciesAll"));
+const VacanciesActive = lazy(() => import("../pages/VacanciesActive"))
+const VacanciesFinished = lazy(() => import("../pages/VacanciesFinished"))
 
 export default function AppRoutes(): ReactNode {
   const router = createBrowserRouter(
@@ -21,12 +23,15 @@ export default function AppRoutes(): ReactNode {
           path="dashboard"
           element={
             <PrivateRoute>
-              <Dashboard />
+              <DashboardLayout />
             </PrivateRoute>
           }
-
-          loader={dashboardLoader}
-        ></Route>
+        >
+          <Route index element={<VacanciesAll />} />
+          <Route path="active" element={<VacanciesActive />}/>
+          <Route path="finished" element={<VacanciesFinished />}/>
+          <Route path="analitics" element=""/>
+        </Route>
         <Route path="*" element={<p>404</p>} />
       </Route>
     )

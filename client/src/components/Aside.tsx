@@ -7,6 +7,7 @@ import ButtonDataActive from "./ButtonDataActive";
 import ButtonAnalitics from "./ButtonAnalitics";
 import { useSearchParams } from "react-router-dom";
 import { useAppSelector } from "../redux/hooks";
+import defaultAvatar from "../assets/default_avatar.png"
 
 export default function Aside(): ReactNode {
   const isAuth : boolean = useAppSelector((state) => state.auth.isAuth);
@@ -22,7 +23,7 @@ export default function Aside(): ReactNode {
             <img
               id="user"
               className=" w-10 h-10 rounded-full"
-              src={user.userLogo!}
+              src={user.userLogo ? user.userLogo : defaultAvatar}
               alt="user avatar"
             />
             <div className="flex flex-col gap-1">
