@@ -1,5 +1,6 @@
+import { GetAllNotesParams } from './../../types/types';
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { FetchStatusType, INoteParams, INotes } from "../../types/types";
+import { FetchStatusType, GetAllNotesParams, INoteParams, INotes } from "../../types/types";
 import { getAllNotes } from "../../services/notesApi";
 
 interface NotesState {
@@ -16,8 +17,8 @@ const initialState: NotesState = {
   searchParams: null,
 };
 
-export const fetchNotes = createAsyncThunk("notes/fetchNotes", async () => {
-  const response = await getAllNotes();
+export const fetchNotes = createAsyncThunk("notes/fetchNotes", async (params: GetAllNotesParams) => {
+  const response = await getAllNotes(params);
   return response;
 });
 

@@ -53,3 +53,10 @@ export type DateIntervalType = {
   from: Date;
   to: Date;
 };
+
+export interface GetAllNotesParams {
+  status : "active" | "finished" | "all";
+  selectedField?: SelectedFieldType;
+  sortOrder?: SortOrderType;
+  dateInterval?: DateIntervalType;
+}

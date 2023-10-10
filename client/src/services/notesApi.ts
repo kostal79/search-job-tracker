@@ -1,14 +1,23 @@
 import axios from "axios";
 import { SERVER_URL, activeStatuses } from "../constants";
-import { EditableValuesType, INotes } from "../types/types";
+import { EditableValuesType, GetAllNotesParams, INotes } from "../types/types";
 
 interface IDeleteRequest {
   message: string;
 }
 
-export async function getAllNotes(): Promise<INotes[]> {
+
+
+export async function getAllNotes(requestParams: GetAllNotesParams ): Promise<INotes[]> {
+  const { status, selectedField,  sortOrder, dateInterval} = requestParams;
   const notes = await axios.get(`${SERVER_URL}/api/notes/all`, {
     withCredentials: true,
+    params: {
+      status,
+      selectedField,
+      sortOrder,
+      dateInterval,
+    }
   });
   console.log("NOTES: ", notes);
   return notes.data.notes;

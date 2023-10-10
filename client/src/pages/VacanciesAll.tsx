@@ -10,7 +10,7 @@ export default function VacanciesAll(): ReactNode {
 
   useEffect(() => {
     if (fetchStatus === "idle") {
-      dispatch(fetchNotes());
+      dispatch(fetchNotes({status: "all"}));
     }
   }, [fetchStatus, dispatch]);
 
