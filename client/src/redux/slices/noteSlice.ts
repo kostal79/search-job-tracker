@@ -1,10 +1,10 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { INoteParams, INotes } from "../../types/types";
+import { FetchStatusType, INoteParams, INotes } from "../../types/types";
 import { getAllNotes } from "../../services/notesApi";
 
 interface NotesState {
   items: INotes[];
-  fetchStatus: "idle" | "loading" | "succeeded" | "failed";
+  fetchStatus: FetchStatusType;
   error: string | null | undefined;
   searchParams: INoteParams | null ;
 }

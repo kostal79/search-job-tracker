@@ -2,11 +2,12 @@ import { ReactNode, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { fetchNotes } from "../redux/slices/noteSlice";
 import Table from "../components/Table";
+import { activeStatuses } from "../constants";
 
 export default function VacanciesActive(): ReactNode {
   const dispatch = useAppDispatch();
   const notes = useAppSelector((state) => state.notes.items).filter(
-    (note) => !["refused", "declined offer"].includes(note.status)
+    (note) => activeStatuses.includes(note.status)
   );
   const fetchStatus = useAppSelector((state) => state.notes.fetchStatus);
 

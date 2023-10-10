@@ -1,42 +1,32 @@
-import React, { ChangeEvent, ReactNode, useState } from "react";
+import { ChangeEvent, ReactNode, useState } from "react";
 import { GoSortAsc } from "react-icons/go";
 import { GoSortDesc } from "react-icons/go";
-import { useSearchParams } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { setSelectedField, setSortOrder } from "../redux/slices/filterSlice";
+import { SelectedFieldType } from "../types/types";
 
-export default function SortSelector() : ReactNode {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const initialSortValue : string = searchParams.get("sort")
-    ? searchParams.get("sort")!
-    : "created_at";
-  const initialOrderValue: number = searchParams.get("order")
-    ? Number(searchParams.get("order")!)
-    : -1;
-  const [selected, setSelected] = useState<string>(initialSortValue);
-  const [sortBy, setSortBy] = useState<number>(initialOrderValue);
+export default function SortSelector(): ReactNode {
+  const dispatch = useAppDispatch();
+  const selectedField = useAppSelector(state => state.filters.selectedField);
+  const sortOrder = useAppSelector(state => state.filters.sortOrder);
 
-  const sortIcon : ReactNode =
-    sortBy === 1 ? (
+  const sortIcon: ReactNode =
+  sortOrder === "grow" ? (
       <GoSortAsc className="w-6 h-6 text-grey-8a ml-5" />
     ) : (
       <GoSortDesc className="w-6 h-6 text-grey-8a ml-5" />
     );
 
   const sortChangeHandler: () => void = () => {
-    if (sortBy === 1) {
-      setSortBy(-1);
-      searchParams.set("order", "-1")
-      setSearchParams(searchParams)
+    if (sortOrder === "grow") {
+      dispatch(setSortOrder("desc"));
     } else {
-      setSortBy(1);
-      searchParams.set("order", "1");
-      setSearchParams(searchParams)
+      dispatch(setSortOrder("grow"));
     }
   };
 
   const onChangeHandler = (event: ChangeEvent<HTMLSelectElement>) => {
-    setSelected(event.target.value);
-    searchParams.set("sort", event.target.value);
-    setSearchParams(searchParams);
+    dispatch(setSelectedField(event.target.value as SelectedFieldType));
   };
 
   return (
@@ -45,7 +35,7 @@ export default function SortSelector() : ReactNode {
       <select
         onChange={onChangeHandler}
         className="pr-5 pb-3 pt-3 pl-1 bg-transparent text-grey-8a cursor-pointer appearance-none"
-        value={selected}
+        value={selectedField}
       >
         <option value="created_at">Created</option>
         <option value="company">Company name</option>

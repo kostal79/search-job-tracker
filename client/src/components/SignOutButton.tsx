@@ -1,8 +1,8 @@
-import React, { ReactNode } from "react";
+import { ReactNode, memo } from "react";
 import { useLogout } from "../hooks/useLogout";
 import singoutSVG from "../assets/logout.svg";
 
-export default function SignOutButton() : ReactNode {
+export default memo(function SignOutButton() : ReactNode {
   const {logOut} = useLogout();
   return (
     <div>
@@ -14,4 +14,4 @@ export default function SignOutButton() : ReactNode {
       </button>
     </div>
   );
-}
+})

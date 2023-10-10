@@ -1,7 +1,6 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import ButtonEdit from "./ButtonEdit";
 import ButtonDeleteNote from "./ButtonDeleteNote";
-import { useAppSelector } from "../redux/hooks";
 import { INotes } from "../types/types";
 
 interface TableProps {

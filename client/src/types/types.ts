@@ -24,7 +24,7 @@ export interface INotes {
   created_at?: Date;
 }
 
-export type EditableValuesType = Omit<INotes, "_id" | "created_at">
+export type EditableValuesType = Omit<INotes, "_id" | "created_at">;
 
 export interface INoteParams {
   status: string | null;
@@ -36,3 +36,20 @@ export interface INoteParams {
   time_to: number;
   search: string | null;
 }
+
+export type FetchStatusType = "idle" | "loading" | "succeeded" | "failed";
+
+export type SelectedFieldType =
+  | "created_at"
+  | "company"
+  | "vacancy"
+  | "contact"
+  | "status"
+  | "comment";
+
+export type SortOrderType = "grow" | "desc";
+
+export type DateIntervalType = {
+  from: Date;
+  to: Date;
+};

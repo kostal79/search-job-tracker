@@ -14,19 +14,9 @@ export async function getAllNotes(): Promise<INotes[]> {
   return notes.data.notes;
 }
 
-export async function getActiveNotes(): Promise<INotes[] | undefined> {
-  try {
-    const response = await axios.get(`${SERVER_URL}/api/users/notes`, {
-      withCredentials: true,
-    });
-    const activeNotes: Array<INotes> = response.data.notes.filter(
-      (note: INotes) => activeStatuses.includes(note.status)
-    );
-    return activeNotes;
-  } catch (err) {
-    if (err instanceof Error) console.error(err.message);
-    else console.error("Unknown error");
-  }
+export async function getActiveNotes(): Promise<INotes[]> {
+  const notes = await axios.get(`${SERVER_URL}/api/notes/active`)
+  return notes.data.notes;
 }
 
 export async function createNote(

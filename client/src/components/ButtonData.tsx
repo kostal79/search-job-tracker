@@ -2,13 +2,14 @@ import { ReactNode } from "react";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { NavLink } from "react-router-dom";
 
-export default function ButtonData() : ReactNode {
+export default function ButtonData(): ReactNode {
   return (
     <NavLink
       to={`/dashboard`}
-      className={({isActive}) => 
-        isActive ? "px-4 py-2.5 bg-white rounded-md" : "px-4 py-2.5 rounded-md  hover:bg-white"
-        
+      className={({ isActive }) =>
+        isActive
+          ? "px-4 py-2.5 bg-white rounded-md"
+          : "px-4 py-2.5 rounded-md  hover:bg-white"
       }
       end
     >
@@ -18,4 +19,4 @@ export default function ButtonData() : ReactNode {
       </span>
     </NavLink>
   );
-}
+};

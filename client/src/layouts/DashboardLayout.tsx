@@ -1,21 +1,17 @@
-import { ReactNode,  useState } from "react";
+import { ReactNode, useState } from "react";
 import SearchInput from "../components/SearchInput";
 import ButtonAddNote from "../components/ButtonAddNote";
-import {  Outlet, defer, useSearchParams } from "react-router-dom";
-import { createNote, getAllNotes } from "../services/notesApi";
+import { Outlet } from "react-router-dom";
+import { createNote } from "../services/notesApi";
 import Dialog from "../components/Dialog";
 import FormAddNote from "../components/FormAddNote";
 import { addNote } from "../redux/slices/noteSlice";
-import { activeStatuses, finishedStatuses, pageLimit } from "../constants";
 import Filters from "../components/Filters";
 import { EditableValuesType } from "../types/types";
 import { useAppDispatch } from "../redux/hooks";
 
-
-export default function Dashboard(): ReactNode {
+export default function DashboardLayout(): ReactNode {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [searchParams, _] = useSearchParams();
-  const status = searchParams.get("status");
 
   const onClose: () => void = () => setIsOpen(false);
   const onOpen: () => void = () => setIsOpen(true);
@@ -34,14 +30,7 @@ export default function Dashboard(): ReactNode {
     values
   ) => {
     const newNote = await createNote(values);
-    const currentStatus = values.status;
-    if (
-      !status ||
-      (status === "active" && activeStatuses.includes(currentStatus)) ||
-      (status === "finished" && finishedStatuses.includes(currentStatus))
-    ) {
-      if (newNote) dispatch(addNote(newNote));
-    }
+    dispatch(addNote(newNote!));
     alert(`Created new note`);
     onClose();
   };

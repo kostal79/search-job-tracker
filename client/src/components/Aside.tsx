@@ -1,19 +1,16 @@
-import React, { ReactNode } from "react";
+import { ReactNode } from "react";
 import SignOutButton from "./SignOutButton";
 import ButtonSettings from "./ButtonSettings";
 import ButtonData from "./ButtonData";
 import ButtonDataFinished from "./ButtonDataFinished";
 import ButtonDataActive from "./ButtonDataActive";
 import ButtonAnalitics from "./ButtonAnalitics";
-import { useSearchParams } from "react-router-dom";
 import { useAppSelector } from "../redux/hooks";
 import defaultAvatar from "../assets/default_avatar.png"
 
 export default function Aside(): ReactNode {
-  const isAuth : boolean = useAppSelector((state) => state.auth.isAuth);
+  const isAuth = useAppSelector((state) => state.auth.isAuth);
   const user = useAppSelector((state) => state.auth.user);
-  const [searchParams, _] = useSearchParams();
-  const status = searchParams.get("status");
 
   if (isAuth) {
     return (
@@ -34,9 +31,9 @@ export default function Aside(): ReactNode {
           <ButtonSettings />
         </section>
       <nav className="flex flex-col gap-2 mt-10">
-        <ButtonData status={status}/>
-        <ButtonDataActive status={status}/>
-        <ButtonDataFinished status={status}/>
+        <ButtonData/>
+        <ButtonDataActive />
+        <ButtonDataFinished />
         <ButtonAnalitics />
 
       </nav>

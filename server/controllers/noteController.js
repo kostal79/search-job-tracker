@@ -2,7 +2,6 @@ const Note = require("../models/note");
 
 class noteController {
     async getAllNotes(req, res) {
-        console.log("request at", Date.now())
         try {
             const user = req.user;
             const notes = await Note.find({ _id: { $in: user.notes } })
