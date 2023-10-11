@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { Navigate  } from "react-router-dom";
-import { useAppSelector } from "../redux/hooks";
+import { useAppSelector } from "../store/hooks";
 
 interface PrivateRouteProps {
   children: ReactNode

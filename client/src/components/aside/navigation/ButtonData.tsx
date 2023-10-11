@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 export default function ButtonData(): ReactNode {
   return (
     <NavLink
-      to={`/dashboard`}
+      to={`/dashboard/all`}
       className={({ isActive }) =>
         isActive
           ? "px-4 py-2.5 bg-white rounded-md"

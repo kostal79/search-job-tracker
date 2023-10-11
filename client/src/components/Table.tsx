@@ -4,12 +4,12 @@ import ButtonDeleteNote from "./ButtonDeleteNote";
 import { INotes } from "../types/types";
 
 interface TableProps {
-  notes: INotes[];
+  notes: INotes[] | undefined;
 }
 
 export default function Table({notes} : TableProps) : ReactNode {
 
-  if (notes.length > 0) {
+  if (notes && notes.length > 0) {
     return (
       <table className="mt-8 text-grey-dark text-base table-fixed min-w-[800px]">
         <thead>

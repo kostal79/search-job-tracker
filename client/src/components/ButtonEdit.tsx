@@ -2,10 +2,10 @@ import React, { ReactNode, useState } from "react";
 import { LuPencil } from "react-icons/lu";
 import Dialog from "./Dialog";
 import FormAddNote from "./FormAddNote";
-import { editNote } from "../redux/slices/noteSlice";
+import { editNote } from "../store/slices/noteSlice";
 import { updateNote } from "../services/notesApi";
 import { EditableValuesType, INotes } from "../types/types";
-import { useAppDispatch } from "../redux/hooks";
+import { useAppDispatch } from "../store/hooks";
 
 interface ButtonEdit {
   note: INotes;

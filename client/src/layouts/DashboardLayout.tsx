@@ -5,10 +5,10 @@ import { Outlet } from "react-router-dom";
 import { createNote } from "../services/notesApi";
 import Dialog from "../components/Dialog";
 import FormAddNote from "../components/FormAddNote";
-import { addNote } from "../redux/slices/noteSlice";
+import { addNote } from "../store/slices/noteSlice";
 import Filters from "../components/Filters";
 import { EditableValuesType } from "../types/types";
-import { useAppDispatch } from "../redux/hooks";
+import { useAppDispatch } from "../store/hooks";
 
 export default function DashboardLayout(): ReactNode {
   const [isOpen, setIsOpen] = useState<boolean>(false);

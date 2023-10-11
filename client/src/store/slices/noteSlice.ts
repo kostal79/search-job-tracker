@@ -1,4 +1,3 @@
-import { GetAllNotesParams } from './../../types/types';
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { FetchStatusType, GetAllNotesParams, INoteParams, INotes } from "../../types/types";
 import { getAllNotes } from "../../services/notesApi";
@@ -45,6 +44,9 @@ export const noteSlice = createSlice({
         }
       }
     },
+    setFetchStatus: (state, action: PayloadAction<FetchStatusType>) => {
+      state.fetchStatus = action.payload;
+    },
     setSearch: (state, action: PayloadAction<INoteParams>) => {
       state.searchParams = action.payload;
     },
@@ -65,7 +67,7 @@ export const noteSlice = createSlice({
   },
 });
 
-export const { setNotes, addNote, deleteFromNotes, editNote, setSearch } =
+export const { setNotes, addNote, deleteFromNotes, editNote, setSearch, setFetchStatus } =
   noteSlice.actions;
 
 export default noteSlice.reducer;

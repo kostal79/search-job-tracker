@@ -13,8 +13,8 @@ const initialState: FilterState = {
   selectedField: "created_at",
   sortOrder: "desc",
   dateInterval: {
-    from: new Date(),
-    to: new Date(),
+    from: 1,
+    to: Date.now(),
   },
 };
 
@@ -33,10 +33,10 @@ export const filterSlice = createSlice({
     },
     resetFilters: (state) => {
       state.selectedField = "created_at";
-      state.sortOrder = "grow";
+      state.sortOrder = "asc";
       state.dateInterval = {
-        from: new Date(),
-        to: new Date()
+        from: Date.now(),
+        to: Date.now()
       }
     },
   },

@@ -5,8 +5,8 @@ import {
   resetUserInfo,
   setIsAuth,
   setUserInfo,
-} from "./redux/slices/authSlice";
-import { useAppDispatch } from "./redux/hooks";
+} from "./store/slices/authSlice";
+import { useAppDispatch } from "./store/hooks";
 
 export default function App() {
   const dispatch = useAppDispatch();

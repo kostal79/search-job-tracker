@@ -4,14 +4,27 @@ class noteController {
     async getAllNotes(req, res) {
         try {
             const user = req.user;
-            const {status, selectedField, sortOrder, dateInterval} = req.query;
+            const { status, selectedField, sortOrder, dateInterval } = req.query;
+            console.log(req.query)
             const query = {};
-            if (status && status === "active") {
-                query["status"] = {$in: ["under review", "interview", "offer"]}
-            } else if (dateInterval) {
-                query["created_at"] = {$in: ['refused', 'declined offer']}
+            let sortRule = null;
+            if (status && status === "all") {
+                
             }
-            const notes = await Note.find({ _id: { $in: user.notes } })
+            else if (status && status === "active") {
+                query["status"] = { $in: ["under review", "interview", "offer"] };
+            } else if (status && status === "finished") {
+                query["status"] = { $in: ['refused', 'declined offer'] };
+            }
+            if (dateInterval) {
+                query["created_at"] = { $gte: dateInterval.from, $lt: dateInterval.to };
+            }
+            console.log(query)
+            if (selectedField && sortOrder) {
+                sortRule = {[selectedField] : sortOrder}
+            }
+            const notes = await Note.find({ _id: { $in: user.notes }, ...query })
+                .sort(sortRule)
             return res.status(200).json({ notes })
         } catch (error) {
             console.error(error)

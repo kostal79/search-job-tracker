@@ -3,7 +3,7 @@ import { useLogout } from "../hooks/useLogout";
 import singoutSVG from "../assets/logout.svg";
 
 export default memo(function SignOutButton() : ReactNode {
-  const {logOut} = useLogout();
+  const logOut = useLogout();
   return (
     <div>
       <button className="px-4 py-2.5" onClick={logOut}>

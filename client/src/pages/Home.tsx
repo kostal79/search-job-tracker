@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 import SignInButton from "../components/SignInButton";
 import { Navigate } from "react-router-dom";
-import { useAppSelector } from "../redux/hooks";
+import { useAppSelector } from "../store/hooks";
 
 export default function Home(): ReactNode {
   const isAuth = useAppSelector((state) => state.auth.isAuth);

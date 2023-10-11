@@ -21,7 +21,7 @@ export interface INotes {
   status: "refused" | "under review" | "interview" | "offer" | "declined offer";
   contact: string;
   comment?: string;
-  created_at?: Date;
+  created_at?: string;
 }
 
 export type EditableValuesType = Omit<INotes, "_id" | "created_at">;
@@ -40,22 +40,24 @@ export interface INoteParams {
 export type FetchStatusType = "idle" | "loading" | "succeeded" | "failed";
 
 export type SelectedFieldType =
-  | "created_at"
-  | "company"
-  | "vacancy"
-  | "contact"
-  | "status"
-  | "comment";
+| "created_at"
+| "company"
+| "vacancy"
+| "contact"
+| "status"
+| "comment";
 
-export type SortOrderType = "grow" | "desc";
+export type SortOrderType = "asc" | "desc";
 
 export type DateIntervalType = {
-  from: Date;
-  to: Date;
+  from: number;
+  to: number;
 };
 
+export type GetAllNotesParamsStatusType = "active" | "finished" | "all";
+
 export interface GetAllNotesParams {
-  status : "active" | "finished" | "all";
+  status : GetAllNotesParamsStatusType;
   selectedField?: SelectedFieldType;
   sortOrder?: SortOrderType;
   dateInterval?: DateIntervalType;

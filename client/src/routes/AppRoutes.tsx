@@ -10,9 +10,7 @@ import PrivateRoute from "./PrivateRoute";
 
 const DashboardLayout = lazy(() => import("../layouts/DashboardLayout"));
 const Home = lazy(() => import("../pages/Home"));
-const VacanciesAll = lazy(() => import("../pages/VacanciesAll"));
-const VacanciesActive = lazy(() => import("../pages/VacanciesActive"))
-const VacanciesFinished = lazy(() => import("../pages/VacanciesFinished"))
+const Chart = lazy(() => import("../pages/Chart"));
 
 export default function AppRoutes(): ReactNode {
   const router = createBrowserRouter(
@@ -20,17 +18,14 @@ export default function AppRoutes(): ReactNode {
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
         <Route
-          path="dashboard"
+          path="dashboard/:status"
           element={
             <PrivateRoute>
               <DashboardLayout />
             </PrivateRoute>
           }
         >
-          <Route index element={<VacanciesAll />} />
-          <Route path="active" element={<VacanciesActive />}/>
-          <Route path="finished" element={<VacanciesFinished />}/>
-          <Route path="analitics" element=""/>
+          <Route index element={<Chart />} />
         </Route>
         <Route path="*" element={<p>404</p>} />
       </Route>

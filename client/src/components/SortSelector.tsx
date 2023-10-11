@@ -1,9 +1,10 @@
 import { ChangeEvent, ReactNode, useState } from "react";
 import { GoSortAsc } from "react-icons/go";
 import { GoSortDesc } from "react-icons/go";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { setSelectedField, setSortOrder } from "../redux/slices/filterSlice";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { setSelectedField, setSortOrder } from "../store/slices/filterSlice";
 import { SelectedFieldType } from "../types/types";
+import { setFetchStatus } from "../store/slices/noteSlice";
 
 export default function SortSelector(): ReactNode {
   const dispatch = useAppDispatch();
@@ -11,17 +12,17 @@ export default function SortSelector(): ReactNode {
   const sortOrder = useAppSelector(state => state.filters.sortOrder);
 
   const sortIcon: ReactNode =
-  sortOrder === "grow" ? (
+  sortOrder === "asc" ? (
       <GoSortAsc className="w-6 h-6 text-grey-8a ml-5" />
     ) : (
       <GoSortDesc className="w-6 h-6 text-grey-8a ml-5" />
     );
 
   const sortChangeHandler: () => void = () => {
-    if (sortOrder === "grow") {
+    if (sortOrder === "asc") {
       dispatch(setSortOrder("desc"));
     } else {
-      dispatch(setSortOrder("grow"));
+      dispatch(setSortOrder("asc"));
     }
   };
 
