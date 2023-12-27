@@ -16,6 +16,6 @@ export default function Home(): ReactNode {
       </div>
     );
   } else {
-    return <Navigate to="/dashboard" />;
+    return <Navigate to="/chart/all" />;
   }
 }

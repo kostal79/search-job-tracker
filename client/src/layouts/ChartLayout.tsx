@@ -10,7 +10,7 @@ import Filters from "../components/Filters";
 import { EditableValuesType } from "../types/types";
 import { useAppDispatch } from "../store/hooks";
 
-export default function DashboardLayout(): ReactNode {
+export default function Chart(): ReactNode {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const onClose: () => void = () => setIsOpen(false);

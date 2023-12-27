@@ -1,5 +1,5 @@
 import axios from "axios";
-import { SERVER_URL, activeStatuses } from "../constants";
+import { SERVER_URL } from "../constants";
 import { EditableValuesType, GetAllNotesParams, INotes } from "../types/types";
 
 interface IDeleteRequest {

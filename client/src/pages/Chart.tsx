@@ -14,7 +14,7 @@ interface NoteParamsType {
   status?: GetAllNotesParamsStatusType;
 }
 
-export default function VacanciesAll(): ReactNode {
+export default function Chart(): ReactNode {
   const { status }: NoteParamsType = useParams();
   const dispatch = useAppDispatch();
   const sortedAndFilteredNotes: INotes[] = useFilteredData();

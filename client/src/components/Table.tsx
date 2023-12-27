@@ -61,6 +61,6 @@ export default function Table({notes} : TableProps) : ReactNode {
       </table>
     );
   } else {
-    return <p>No notes yet</p>;
+    return <p>Notes not found</p>;
   }
 }

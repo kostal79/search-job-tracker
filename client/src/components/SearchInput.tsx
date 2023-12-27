@@ -1,39 +1,54 @@
-import React, { ChangeEvent, KeyboardEvent, ReactNode, useState } from "react";
+import { useAppDispatch } from "@/store/hooks";
+import { clearSearchQuery, setSearchQuery } from "@/store/slices/filterSlice";
+import {
+  ChangeEvent,
+  KeyboardEvent,
+  MouseEvent,
+  ReactNode,
+  useEffect,
+  useState,
+} from "react";
 import { LuSearch } from "react-icons/lu";
 import { LuXCircle } from "react-icons/lu";
-import { useSearchParams } from "react-router-dom";
 
 export default function SearchInput(): ReactNode {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const initialValue: string = searchParams.get("search")
-    ? searchParams.get("search")!
-    : "";
-  const [searchValue, setSearchValue] = useState<string>(initialValue);
+  const [searchValue, setSearchValue] = useState<string>("");
+  const dispatch = useAppDispatch();
 
-  const searchSubmit: () => void = () => {
+  const searchSubmit: (
+    event: MouseEvent<HTMLButtonElement> | KeyboardEvent<HTMLInputElement>
+  ) => void = (event) => {
     if (searchValue) {
-      searchParams.set("search", searchValue);
-      setSearchParams(searchParams);
+        dispatch(setSearchQuery(searchValue));
+    } else {
+      dispatch(clearSearchQuery())
     }
   };
 
   const changeHandler: (event: ChangeEvent<HTMLInputElement>) => void = (
     event
   ) => {
-    setSearchValue((prev) => event.target.value);
+    setSearchValue(event.target.value);
   };
 
-  const clearHandler: () => void = () => {
+  const clearHandler: (event: MouseEvent<HTMLButtonElement>) => void = () => {
     setSearchValue("");
-    searchParams.delete("search");
-    setSearchParams(searchParams);
+    dispatch(clearSearchQuery());
   };
 
-  const keyPressHandler = (event: KeyboardEvent<HTMLInputElement>) => {
+  const keyPressHandler: (event: KeyboardEvent<HTMLInputElement>) => void = (
+    event
+  ) => {
     if (event.key === "Enter") {
-      searchSubmit();
+      searchSubmit(event);
     }
   };
+
+  useEffect(() => {
+    return () => {
+      dispatch(clearSearchQuery());
+    };
+  }, [dispatch]);
 
   return (
     <div className="relative w-[70%]">

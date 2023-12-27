@@ -1,12 +1,15 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { DateIntervalType, SelectedFieldType, SortOrderType } from "../../types/types";
-
-
+import {
+  DateIntervalType,
+  SelectedFieldType,
+  SortOrderType,
+} from "../../types/types";
 
 interface FilterState {
   selectedField: SelectedFieldType;
   sortOrder: SortOrderType;
   dateInterval: DateIntervalType;
+  searchQuery: string;
 }
 
 const initialState: FilterState = {
@@ -16,6 +19,7 @@ const initialState: FilterState = {
     from: 1,
     to: Date.now(),
   },
+  searchQuery: "",
 };
 
 export const filterSlice = createSlice({
@@ -33,16 +37,28 @@ export const filterSlice = createSlice({
     },
     resetFilters: (state) => {
       state.selectedField = "created_at";
-      state.sortOrder = "asc";
+      state.sortOrder = "desc";
       state.dateInterval = {
-        from: Date.now(),
-        to: Date.now()
-      }
+        from: 1,
+        to: Date.now(),
+      };
+    },
+    setSearchQuery: (state, action: PayloadAction<string>) => {
+      state.searchQuery = action.payload;
+    },
+    clearSearchQuery: (state) => {
+      state.searchQuery = "";
     },
   },
 });
 
-export const { setSelectedField, setSortOrder, setDate, resetFilters } =
-  filterSlice.actions;
+export const {
+  setSelectedField,
+  setSortOrder,
+  setDate,
+  resetFilters,
+  setSearchQuery,
+  clearSearchQuery,
+} = filterSlice.actions;
 
 export default filterSlice.reducer;

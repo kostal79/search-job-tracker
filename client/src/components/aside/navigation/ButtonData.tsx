@@ -1,3 +1,4 @@
+import { CHART_URL } from "@/constants";
 import { ReactNode } from "react";
 import { LuLayoutDashboard } from "react-icons/lu";
 import { NavLink } from "react-router-dom";
@@ -5,7 +6,7 @@ import { NavLink } from "react-router-dom";
 export default function ButtonData(): ReactNode {
   return (
     <NavLink
-      to={`/dashboard/all`}
+      to={`${CHART_URL}/all`}
       className={({ isActive }) =>
         isActive
           ? "px-4 py-2.5 bg-white rounded-md"

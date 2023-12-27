@@ -1,10 +1,9 @@
-import { ChangeEvent, ReactNode, useState } from "react";
+import { ChangeEvent, ReactNode, useEffect, useState } from "react";
 import { GoSortAsc } from "react-icons/go";
 import { GoSortDesc } from "react-icons/go";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { setSelectedField, setSortOrder } from "../store/slices/filterSlice";
+import { resetFilters, setSelectedField, setSortOrder } from "../store/slices/filterSlice";
 import { SelectedFieldType } from "../types/types";
-import { setFetchStatus } from "../store/slices/noteSlice";
 
 export default function SortSelector(): ReactNode {
   const dispatch = useAppDispatch();
@@ -29,6 +28,12 @@ export default function SortSelector(): ReactNode {
   const onChangeHandler = (event: ChangeEvent<HTMLSelectElement>) => {
     dispatch(setSelectedField(event.target.value as SelectedFieldType));
   };
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetFilters())
+    }
+  }, [dispatch])
 
   return (
     <section className="border-solid border rounded-lg flex items-center">
